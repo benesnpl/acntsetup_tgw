@@ -63,7 +63,7 @@ resource "aws_route_table" "private_rt" {
   
    route {
     cidr_block = "192.168.0.0/16"
-    gateway_id = aws_ec2_transit_gateway.main_tgw.idd
+    gateway_id = aws_ec2_transit_gateway.main_tgw.id
   }
   
    route {
@@ -123,10 +123,11 @@ resource "aws_ec2_transit_gateway" "main_tgw" {
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "example" {
-  subnet_ids         = [aws_subnet.private.id]
+  count = length(var.subnets_cidr_private)
+  subnet_ids         = element(aws_subnet.public.*.id,count.index)
   transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   vpc_id             = aws_vpc.main_vpc.id
-  appliance_mode_support = enable
+  appliance_mode_support = "enable"
 }
 
 
