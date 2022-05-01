@@ -15,6 +15,11 @@ variable "subnets_cidr_private" {
 	default = ["10.20.3.0/24", "10.20.4.0/24"]
 }
 
+variable "subnets_cidr_private_tgw" {
+	type = set(string)
+	default = ("10.20.3.0/24", "10.20.4.0/24")
+}
+
 variable "azs" {
 	type = list
 	default = ["eu-west-1a", "eu-west-1b"]
