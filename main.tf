@@ -56,6 +56,7 @@ resource "aws_route_table" "public_rt" {
 
 resource "aws_route_table" "private_rt" {
   vpc_id = aws_vpc.main_vpc.id
+  depends_on = [aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw,aws_nat_gateway.main_nat.id]
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.main_nat.id
