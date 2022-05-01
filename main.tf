@@ -124,15 +124,7 @@ resource "aws_ec2_transit_gateway" "main_tgw" {
   auto_accept_shared_attachments = "enable"
 }
 
-data "aws_subnet_ids" "private" {
-  vpc_id = aws_vpc.main_vpc.id
-  filter {
-    name   = "tag:Name"
-    values = ["Subnet-Private*"] # insert values here
-  }
-}
   
-
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "example" {
   subnet_ids         = "${aws_subnet.private.*.id}"
@@ -251,13 +243,13 @@ data "aws_ec2_transit_gateway_vpn_attachment" "miami_attach" {
 
 resource "aws_ec2_transit_gateway_route" "oak_vpn" {
   destination_cidr_block         = "10.159.94.0/23"
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpn_attachment.oak_attach.id
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpn_attachment.oak_attach
   transit_gateway_route_table_id = aws_ec2_transit_gateway.main_tgw.association_default_route_table_id
   depends_on = [data.aws_ec2_transit_gateway_vpn_attachment.oak_attach]
 }
 
 resource "aws_ec2_transit_gateway_route" "mia_vpn" {
   destination_cidr_block         = "10.189.0.0/23"
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpn_attachment.miami_attach.id
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpn_attachment.miami_attach
   transit_gateway_route_table_id = aws_ec2_transit_gateway.main_tgw.association_default_route_table_id
 }
