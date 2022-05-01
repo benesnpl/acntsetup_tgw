@@ -124,6 +124,7 @@ resource "aws_ec2_transit_gateway" "main_tgw" {
 }
 
 data "aws_subnet_ids" "private" {
+  voc_id = aws_vpc.main_vpc
   filter {
     name   = "tag:Name"
     values = ["Subnet-Private*"] # insert values here
