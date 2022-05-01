@@ -63,17 +63,17 @@ resource "aws_route_table" "private_rt" {
   
    route {
     cidr_block = "192.168.0.0/16"
-    gateway_id = aws_vpn_gateway.vpn_gw.id
+    gateway_id = aws_ec2_transit_gateway.main_tgw.idd
   }
   
    route {
     cidr_block = "172.16.0.0/12"
-    gateway_id = aws_vpn_gateway.vpn_gw.id
+    gateway_id = aws_ec2_transit_gateway.main_tgw.id
   }
   
    route {
     cidr_block = "10.0.0.0/8"
-    gateway_id = aws_vpn_gateway.vpn_gw.id
+    gateway_id = aws_ec2_transit_gateway.main_tgw.id
   }
   
   tags = {
@@ -119,7 +119,7 @@ resource "aws_nat_gateway" "main_nat" {
 
 resource "aws_ec2_transit_gateway" "main_tgw" {
   description = "TGW"
-  auto_accept_shared_attachments = enable
+  auto_accept_shared_attachments = "enable"
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "example" {
