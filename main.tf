@@ -126,7 +126,7 @@ resource "aws_ec2_transit_gateway" "main_tgw" {
 
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "example" {
-  subnet_ids         = toset(tostring([var.subnets_cidr_private]))
+  subnet_ids         = toset([var.subnets_cidr_private])
   transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   vpc_id             = aws_vpc.main_vpc.id
   appliance_mode_support = "enable"
