@@ -122,18 +122,11 @@ resource "aws_ec2_transit_gateway" "main_tgw" {
   auto_accept_shared_attachments = "enable"
 }
 
-data "aws_subnet_ids" "get_privates" {
-  vpc_id = aws_vpc.main_vpc.id
-  filter {
-    name   = "tag:Name"
-    values = ["Subnet-Private1","Subnet-Rivate2"]
-  }
-  depends_on = [aws_subnet.private]
-}
+
 
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "example" {
-  subnet_ids         = [data.aws_subnet_ids.get_privates]
+  subnet_ids         = [var.subnets_cidr_private]
   transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   vpc_id             = aws_vpc.main_vpc.id
   appliance_mode_support = "enable"
