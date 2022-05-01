@@ -130,7 +130,7 @@ data "aws_subnet_ids" "get_privates" {
   }
   depends_on = [aws_subnet.private]
 }
-}
+
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "example" {
   subnet_ids         = [aws_subnet_ids.get_privates]
