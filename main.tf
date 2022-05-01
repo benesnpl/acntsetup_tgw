@@ -98,6 +98,7 @@ resource "aws_eip" "nat" {
   vpc              = true
 }
 
+
 data "aws_subnet" "selected" {
   filter {
     name   = "tag:Name"
@@ -122,11 +123,17 @@ resource "aws_ec2_transit_gateway" "main_tgw" {
   auto_accept_shared_attachments = "enable"
 }
 
-
+data "aws_subnet_ids" "private {
+  filter {
+    name   = "tag:Name"
+    values = ["Subnet-Private*] # insert values here
+  }
+}
+  
 
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "example" {
-  subnet_ids         = toset([var.subnets_cidr_private_tgw])
+  subnet_ids         = [data.aws_subnet_ids.private]
   transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   vpc_id             = aws_vpc.main_vpc.id
   appliance_mode_support = "enable"
