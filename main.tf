@@ -151,7 +151,7 @@ resource "aws_customer_gateway" "miami" {
 }
 
 resource "aws_vpn_connection" "Oakbrook" {
-  vpn_gateway_id      = aws_vpn_gateway.vpn_gw.id
+  transit_gateway_id  = aws_ec2_transit_gateway.main_tgw.id
   customer_gateway_id = aws_customer_gateway.oakbrook.id
   type                = "ipsec.1"
   static_routes_only  = true
@@ -162,7 +162,7 @@ resource "aws_vpn_connection" "Oakbrook" {
 }
 
 resource "aws_vpn_connection" "Miami" {
-  vpn_gateway_id      = aws_vpn_gateway.vpn_gw.id
+  transit_gateway_id  = aws_ec2_transit_gateway.main_tgw.id
   customer_gateway_id = aws_customer_gateway.miami.id
   type                = "ipsec.1"
   static_routes_only  = true
