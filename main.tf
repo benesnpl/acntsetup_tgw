@@ -123,7 +123,7 @@ resource "aws_ec2_transit_gateway" "main_tgw" {
   auto_accept_shared_attachments = "enable"
 }
 
-data "aws_subnet_ids" "private {
+data "aws_subnet_ids" "private" {
   filter {
     name   = "tag:Name"
     values = ["Subnet-Private*] # insert values here
